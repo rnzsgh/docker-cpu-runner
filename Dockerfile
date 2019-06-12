@@ -14,8 +14,10 @@ FROM alpine
 RUN apk update && apk add bash
 
 COPY --from=builder /build/main /main
+COPY --from=builder /build/run.sh /run.sh
+RUN chmod +x /run.sh
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 USER app
 
-CMD ["/main"]
+CMD ["/run.sh"]
